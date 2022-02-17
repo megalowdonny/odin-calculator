@@ -32,14 +32,14 @@
   grid-template-columns: 3fr 1fr;
 }
 
-.numberButtons {
+.numbersContainer {
   border: 1px solid purple;
   margin: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.operandButtons {
+.operandsContainer {
   border: 1px solid green;
   margin: 10px;
   display: grid;

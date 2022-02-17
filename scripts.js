@@ -3,25 +3,26 @@
 const body = document.querySelector('.calculatorBody');
 const display = document.querySelector('.numberDisplay');
 const buttonSection = document.querySelector('.buttonSection');
-const numberButtons = document.querySelector('.numberButtons');
-const operandButtons = document.querySelector('.operandButtons');
-let numbers = []; // Eventual nodelist
-let operands = []; // Eventual nodelist
+const numbersContainer = document.querySelector('.numbersContainer');
+const operandsContainers = document.querySelector('.operandsContainer');
+let numberButtons = []; // Eventual nodelist
+let operandButtons = []; // Eventual nodelist
 let currentValue = display.textContent;
+let numbers = [];
 
 /* Building the Calculator */
 
 const numberList = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0]
 numberList.forEach(i => { 
-  createButton(i, numberButtons);
+  createButton(i, numbersContainer);
 });
-numbers = Array.from(numberButtons.querySelectorAll('.button'));
+numberButtons = Array.from(numbersContainer.querySelectorAll('.button'));
 
 const operandList = ['*', '/', '-', '+', '='];
 operandList.forEach(i => {
-  createButton(i, operandButtons);
+  createButton(i, operandsContainers);
 })
-operands = Array.from(operandButtons.querySelectorAll('.button'));
+operandButtons = Array.from(operandsContainers.querySelectorAll('.button'));
 
 /* Functions */
 
@@ -38,20 +39,43 @@ function updateDisplay() {
   display.textContent = currentValue;
 }
 
+function addNumbers() {
+
+}
+
 /* Event handlers */
 
 function handleNumber(e) {
-  const input = e.target.dataset.value;
+  const input = this.dataset.value;
   console.log(input);
   currentValue += input;
   updateDisplay();
 }
 
-function handleOperand(e) {
-  console.log(e.target.dataset.value);
+function handleOperand() {
+  if (this.dataset.value === '=') {
+    console.log('calculating!')
+    console.log(numbers);
+    return
+  }
+  console.log(this.dataset.value);
+  const value1 = parseInt(currentValue);
+  numbers.push(value1);
+  currentValue = '';
+  updateDisplay();
+
+  if (this.dataset.value === '*') {
+    console.log('multiplying!');
+  } else if (this.dataset.value === '/') {
+    console.log('dividing!');
+  } else if (this.dataset.value === '-') {
+    console.log('subtracting!');
+  } else if (this.dataset.value === '+') {
+    console.log('adding!');
+  } 
 }
 
 /* Event listeners */
 
-numbers.forEach(number => number.addEventListener('click', handleNumber));
-operands.forEach(number => number.addEventListener('click', handleOperand));
+numberButtons.forEach(number => number.addEventListener('click', handleNumber));
+operandButtons.forEach(number => number.addEventListener('click', handleOperand));

@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+}
+
+.calculatorBody {
+  width: 600px;
+  height: 800px;
+  border: 1px solid black;
+}
+
+.numberDisplay {
+  width: 90%;
+  height: 5%;
+  margin: 5% auto 5% auto; /*top right bottom left*/
+  border: 1px solid black;
+  background-color: rgb(230, 230, 230);
+}
+
+.buttonSection {
+  width: 90%;
+  height: 80%;
+  border: 1px solid blue;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
+.numberButtons {
+  border: 1px solid purple;
+  margin: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.operandButtons {
+  border: 1px solid green;
+  margin: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.button {
+  margin: 10px;
+}
+
+#n0 {
+  grid-column: 1 / 3;
+}

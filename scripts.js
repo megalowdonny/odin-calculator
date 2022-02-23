@@ -36,7 +36,11 @@ operandButtons = Array.from(operandsContainers.querySelectorAll('.button'));
 createButton('CLR', numbersContainer);
 const clearButton = document.querySelector('#oCLR');
 
-/* Functions */
+createButton('dot', numbersContainer);
+const dot = document.querySelector('#odot');
+dot.textContent = '.';
+dot.dataset.value = '.';
+/* Front-end functions */
 
 function createButton(i, list) {
   const button = document.createElement('button');
@@ -50,6 +54,8 @@ function createButton(i, list) {
 function updateDisplay() {
   display.textContent = displayValue;
 }
+
+/* Back-end functions */
 
 function flipFlag (operand) {
   console.log(operand);
@@ -69,45 +75,90 @@ function flipFlag (operand) {
   }
 }
 
+/* Actual math functions */
+
+function addNumbers(x, y) {
+  flags.adding = false;
+  return x + y;
+}
+
+function subtractNumbers (x, y) {
+  flags.subtracting = false;
+  return x - y;
+}
+
+function multiplyNumbers (x, y) {
+  flags.multiplying = false;
+  return x * y;
+}
+
+function divideNumbers(x, y) {
+  if (y === 0) {
+    return 'ERROR';
+  }
+  flags.dividing = false;
+  return x / y;
+}
+
 /* Event handlers */
 
 function handleNumber(e) {
   const input = this.dataset.value;
-  console.log(input);
+  if (input === '.' && displayValue.includes('.')) {
+    handleError();
+    return;
+  }
   displayValue += input;
   updateDisplay();
 }
 
 function handleOperand() {
+  // Shuffles the values from display to value1/2
   if (value1 !== 0) {
-    value2 = parseInt(displayValue)
+    value2 = parseFloat(displayValue)
   } else {
-    value1 = parseInt(displayValue);
+    value1 = parseFloat(displayValue);
   }
 
   displayValue = '';
   updateDisplay();
 
-  if (this.dataset.value === '=') {
+  // Only runs if = is pressed, or if this is not the first operation
+  if (this.dataset.value === '=' || (value1 !== 0 && value2 !== 0)) {
     if (flags.adding) {
-      result = value1 + value2;
+      result = addNumbers(value1, value2);
     }
     if (flags.subtracting) {
-      result = value1 - value2;
+      result = subtractNumbers(value1, value2);
     }
     if (flags.multiplying) {
-      result = value1 * value2;
+      result = multiplyNumbers(value1, value2);
     }
     if (flags.dividing) {
-      result = value1 / value2;
+      result = divideNumbers(value1, value2);
     }
-    displayValue = result;
-    updateDisplay();
+
+    // Will run one of these no matter what
+    if (this.dataset.value !== '=') {
+      value1 = result;
+    } else {
+      // Brings result down to at-most 2 decimals
+      displayValue = Math.round(result * 100) / 100;
+      updateDisplay();
+    }
   }
 
+  // Catches dividing by 0
+  if (value2 === 0 && flags.dividing === true) {
+    handleError()
+    return;
+  }
+
+  // Doesn't do anything if = is pressed
   flipFlag(this.dataset.value);
 }
 
+// Clears display and all values/flags
 function handleClear() {
   Object.keys(flags).forEach(flag => {
     flags[flag] = false;
@@ -120,18 +171,20 @@ function handleClear() {
   updateDisplay();
 }
 
+// Runs only if dividing by 0
+function handleError() {
+  alert('ERROR, INVALID INPUT, CLEARING NOW');
+  handleClear();
+}
+
 /* Event listeners */
 
 numberButtons.forEach(number => number.addEventListener('click', handleNumber));
 operandButtons.forEach(number => number.addEventListener('click', handleOperand));
 clearButton.addEventListener('click', handleClear);
+dot.addEventListener('click', handleNumber)
 
 /* NOTES
--So far, I can add/subtract/multiply/divide 2 numbers, hit =, and
-have it work normally. 
--The CLR button also works as it should.
--Cannot do something like 1 + 2 + 3. Need to change how switch works to
-fix, and maybe take all the acutal arithmetic code and put it into
-separate functions, that way they can be called whether or not the =
-has been pressed.
+-Decimals allowed, and no more than 1 is allowed.
+-Only need to do backspace and keyboard support.
 */

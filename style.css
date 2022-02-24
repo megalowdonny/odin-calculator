@@ -3,7 +3,14 @@
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .calculatorBody {
+  margin-top: 30px;
   width: 600px;
   height: 800px;
   border: 1px solid black;

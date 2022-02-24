@@ -32,14 +32,15 @@ operandList.forEach(i => {
 })
 operandButtons = Array.from(operandsContainers.querySelectorAll('.button'));
 
-// Keeps CLR button in numbersContainer, but out of numberButtons
-createButton('CLR', numbersContainer);
-const clearButton = document.querySelector('#oCLR');
-
+// Keeps CLR and DOT buttons in numbersContainer, but out of numberButtons
 createButton('dot', numbersContainer);
 const dot = document.querySelector('#odot');
 dot.textContent = '.';
 dot.dataset.value = '.';
+
+createButton('CLR', numbersContainer);
+const clearButton = document.querySelector('#oCLR');
+
 /* Front-end functions */
 
 function createButton(i, list) {

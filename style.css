@@ -56,3 +56,15 @@
   border-radius: 5%;
   box-shadow: 2px 2px black;
 }
+
+#obackspace {
+  background-color: #ff8585;
+}
+
+#oCLR {
+  font-weight: bold;
+}
+
+#o\= {
+  background-color: #7dc489;
+}

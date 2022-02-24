@@ -7,7 +7,7 @@ const numbersContainer = document.querySelector('.numbersContainer');
 const operandsContainers = document.querySelector('.operandsContainer');
 let numberButtons = []; // Eventual nodelist
 let operandButtons = []; // Eventual nodelist
-let displayValue = display.textContent;
+let displayValue = '';
 let value1 = 0;
 let value2 = 0;
 let result = 0;
@@ -17,6 +17,8 @@ let flags = {
   multiplying: false,
   dividing: false,
 }
+const validKeypresses = ['0', '1', '2', '3', '4', '5', '6', '7', '8',
+    '9', 'Backspace', '+', '-', '*', '/', '=', 'Enter', '.', 'Escape'];
 
 /* Building the Calculator */
 
@@ -65,7 +67,6 @@ function updateDisplay() {
 /* Back-end functions */
 
 function flipFlag (operand) {
-  console.log(operand);
   switch (operand) {
     case '+':
       flags.adding = true;
@@ -111,10 +112,13 @@ function divideNumbers(x, y) {
 
 function handleNumber(e) {
   const input = this.dataset.value;
+
+  // Catches more than 1 decimal point
   if (input === '.' && displayValue.includes('.')) {
     handleError();
     return;
   }
+
   displayValue += input;
   updateDisplay();
 }
@@ -150,7 +154,7 @@ function handleOperand() {
       value1 = result;
     } else {
       // Brings result down to at-most 2 decimals
-      displayValue = Math.round(result * 100) / 100;
+      displayValue = Math.round(result * 100) / 100;6+2
       updateDisplay();
     }
   }
@@ -170,6 +174,25 @@ function handleBackspace() {
   updateDisplay();
 }
 
+function handleKeypress(e) {
+  // Do nothing with invalid keypresses
+  if (!validKeypresses.includes(e.key)) return;
+
+  if (e.key === 'Enter') {
+    document.getElementById('o=').click();
+    return;
+  } else if (e.key === 'Escape') {
+    document.getElementById('oCLR').click();
+    return;
+  } else if (e.key === '.') {
+    document.getElementById('odot').click();
+    return;
+  }
+
+  const pressed = document.getElementById(`o${e.key.toLowerCase()}`);
+  pressed.click();
+}
+
 // Clears display and all values/flags
 function handleClear() {
   Object.keys(flags).forEach(flag => {
@@ -183,7 +206,7 @@ function handleClear() {
   updateDisplay();
 }
 
-// Runs only if dividing by 0
+// Runs only if dividing by 0 or adding more than 1 decimal point
 function handleError() {
   alert('ERROR, INVALID INPUT, CLEARING NOW');
   handleClear();
@@ -196,6 +219,7 @@ operandButtons.forEach(number => number.addEventListener('click', handleOperand)
 clearButton.addEventListener('click', handleClear);
 dot.addEventListener('click', handleNumber);
 backspace.addEventListener('click', handleBackspace);
+document.addEventListener('keyup', handleKeypress);
 
 /* NOTES
 -Decimals allowed, and no more than 1 is allowed.

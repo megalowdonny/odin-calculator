@@ -1,31 +1,36 @@
 * {
   box-sizing: border-box;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .calculatorBody {
   width: 600px;
   height: 800px;
   border: 1px solid black;
+  background-color: #3b486b;
+  border-radius: 5%;
 }
 
 .numberDisplay {
-  width: 90%;
-  height: 5%;
+  width: 80%;
+  font-size: 22px;
+  height: 2em;
   margin: 5% auto 5% auto; /*top right bottom left*/
   padding-right: 5px;
   padding-left: 5px;
   border: 1px solid black;
-  background-color: rgb(230, 230, 230);
+  background-color: #cef5cd;
   text-align: right; 
   display: flex;
   align-items: center;
   justify-content: right;
+  font-family: 'Courier New', Courier, monospace;
+  box-shadow: 2px 2px black;
 }
 
 .buttonSection {
   width: 90%;
   height: 80%;
-  border: 1px solid blue;
   margin-left: auto;
   margin-right: auto;
   display: grid;
@@ -33,14 +38,12 @@
 }
 
 .numbersContainer {
-  border: 1px solid purple;
   margin: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
 .operandsContainer {
-  border: 1px solid green;
   margin: 10px;
   display: grid;
   grid-template-columns: 1fr;
@@ -48,4 +51,8 @@
 
 .button {
   margin: 10px;
+  font-size: 20px;
+  background-color:#cbc5f1;
+  border-radius: 5%;
+  box-shadow: 2px 2px black;
 }

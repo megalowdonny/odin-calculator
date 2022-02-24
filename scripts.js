@@ -41,6 +41,12 @@ dot.dataset.value = '.';
 createButton('CLR', numbersContainer);
 const clearButton = document.querySelector('#oCLR');
 
+createButton('backspace', operandsContainers);
+const backspace = document.getElementById('obackspace')
+backspace.textContent = 'BCK';
+const firstOperand = document.getElementById('o*');
+operandsContainers.insertBefore(backspace, firstOperand);
+
 /* Front-end functions */
 
 function createButton(i, list) {
@@ -159,6 +165,11 @@ function handleOperand() {
   flipFlag(this.dataset.value);
 }
 
+function handleBackspace() {
+  displayValue = displayValue.slice(0, -1);
+  updateDisplay();
+}
+
 // Clears display and all values/flags
 function handleClear() {
   Object.keys(flags).forEach(flag => {
@@ -183,9 +194,10 @@ function handleError() {
 numberButtons.forEach(number => number.addEventListener('click', handleNumber));
 operandButtons.forEach(number => number.addEventListener('click', handleOperand));
 clearButton.addEventListener('click', handleClear);
-dot.addEventListener('click', handleNumber)
+dot.addEventListener('click', handleNumber);
+backspace.addEventListener('click', handleBackspace);
 
 /* NOTES
 -Decimals allowed, and no more than 1 is allowed.
--Only need to do backspace and keyboard support.
+-Only need to do keyboard support.
 */

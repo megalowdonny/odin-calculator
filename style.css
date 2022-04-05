@@ -5,8 +5,10 @@
 
 body {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #f7e3c5;
 }
 
 .calculatorBody {
@@ -62,6 +64,11 @@ body {
   background-color:#cbc5f1;
   border-radius: 5%;
   box-shadow: 2px 2px black;
+}
+
+.author {
+  font-size: 1.5rem;
+  font-style: italic;
 }
 
 #obackspace {
